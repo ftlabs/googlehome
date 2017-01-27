@@ -48,7 +48,7 @@ It is meant to also work with speech but I was unable to make that work and in t
 - Authorize yourself withy our Google account
 - When it comes back to the Google Actions settings click preview in the bottom right
 - After a couple seconds a blue modal should appear in the bottom right of the screen 
-- Follow the link in this to try it on the Google Home Web Simulator
+- Follow the link in this modal to try it on the Google Home Web Simulator
 
 ### Testing via a Google Home 
 
