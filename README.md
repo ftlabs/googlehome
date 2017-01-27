@@ -18,3 +18,18 @@
 - Change the Invocation name to whatever you want use
 
 ## Testing
+
+### Testing via the web simulator
+
+The web simulator is really useful for quick testing when you are happy to test via text rather than speech.
+It is meant to also work with speech but I was unable to make that work and in that case I think it would be better to test with the real device.
+
+- Go to [api.ai](https://api.ai/)
+- Go to Integrations and to the Google Actions settings
+- Click Authorize in the bottom right
+- Authorize yourself withy our Google account
+- When it comes back to the Google Actions settings click preview in the bottom right
+- After a couple seconds a blue modal should appear in the bottom right of the screen 
+- Follow the link in this to try it on the Google Home Web Simulator
+
+### Testing via a Google Home 
