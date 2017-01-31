@@ -13,9 +13,8 @@ const getCompanyIntent = 'getCompany';
 const companyArgument = 'company';
 const marketsDataKey = process.env.markets;
 
-console.log('lily git test');
-
 app.post('/', function (req, res) {
+  console.log ('req.body=', JSON.stringify(req.body));
 	const assistant = new Assistant({request: req, response: res});
   function getCompany (assistant) {
 	let company = assistant.getArgument(companyArgument);
