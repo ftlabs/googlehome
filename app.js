@@ -29,7 +29,7 @@ app.post('/', function (req, res) {
   				return data.json();
   			}
   		}).then((json) => {
-			assistant.tell(json.data.items[0].profile.description);
+			assistant.ask(json.data.items[0].profile.description);
 		});
   	}).catch((error) => {
 		console.log(error)
