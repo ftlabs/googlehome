@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 process.env.DEBUG = 'actions-on-google:*';
 require('isomorphic-fetch');
@@ -20,12 +21,15 @@ app.post('/', function (req, res) {
 	let company = assistant.getArgument(companyArgument);
 	
 	fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`).then((data) => {
-		if (data.ok) {
+		console.log('DATA1:: ', data);
+    if (data.ok) {
   			return data.json();
   		}
   	}).then((json) => {
 		fetch(`http://markets.ft.com/research/webservices/companies/v1/profile?symbols=${json.data.searchResults[0].symbol}&source=${marketsDataKey}`).then((data) => {
-			if (data.ok) {
+			console.log('DATA2:: ', data);
+
+      if (data.ok) {
   				return data.json();
   			}
   		}).then((json) => {
