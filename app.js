@@ -16,10 +16,12 @@ const marketsDataKey = process.env.markets;
 
 app.post('/', function (req, res) {
   console.log ('req.body=', JSON.stringify(req.body));
+  console.log ('EXTRACTED_SessionId=' , req.body.sessionId);
+  console.log ('EXTRACTED_conversation_id=' , req.body.originalRequest.data.conversation.conversation_id);
 	const assistant = new Assistant({request: req, response: res});
   function getCompany (assistant) {
 	let company = assistant.getArgument(companyArgument);
-	
+
 	fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`).then((data) => {
     if (data.ok) {
   			return data.json();
