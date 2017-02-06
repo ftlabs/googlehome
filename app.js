@@ -47,11 +47,12 @@ function moreInfo(assistant){
       assistant.ask(`Sorry, you have to ask for a company first.`);
     } else {
       const lastRequest = sessionIds[thisSessionID][ sessionIds[thisSessionID].length - 1 ];
-      console.log('3 >>>',lastRequest);
-      console.log('3a >>>', lastRequest.contexts[0].metadata);
-      console.log('4 >>>', lastRequest.contexts[0].metadata.intentName);
 
-      if (lastRequest.contexts[0].metadata.intentName === "getCompany"){
+      console.log('3 >>>',lastRequest);
+      console.log('3a >>>', lastRequest.result.contexts[0].metadata);
+      console.log('4 >>>', lastRequest.result.contexts[0].metadata.intentName);
+
+      if (lastRequest.result.contexts[0].metadata.intentName === "getCompany"){
         assistant.ask(`Sorry, I can't tell you anymore about ${lastRequest.result.parameters.company}`);
       } else {
         assistant.ask ("Sorry, I don't know what to do with that.");
