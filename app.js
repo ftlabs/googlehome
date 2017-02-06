@@ -13,8 +13,17 @@ app.use(bodyParser.json({type: 'application/json'}));
 const getCompanyIntent = 'getCompany';
 const companyArgument = 'company';
 const marketsDataKey = process.env.markets;
+const sessionIds = {};
 
 app.post('/', function (req, res) {
+  const thisSessionID = req.body.sessionId;
+  if (sessionIds[thisSessionID] === undefined ){
+      sessionIds[thisSessionID] = [thisSessionID];
+  } else {
+    sessionIds[thisSessionID].push(thisSessionID);
+  }
+  console.log (sessionIds[thisSessionID].length);
+
   console.log('>>>> BODY >>>> \n\n', JSON.stringify(req.body), '\n\n');
   console.log ('req.body=', JSON.stringify(req.body));
   console.log ('EXTRACTED_SessionId=' , req.body.sessionId);
