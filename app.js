@@ -40,10 +40,16 @@ function getCompany (assistant) {
 
 function moreInfo(assistant){
     const thisSessionId = assistant['request_'].body.sessionId;
+    console.log('1 >>>',thisSessionId);
     if (sessionIds[thisSessionID] === undefined ){
+      console.log('2 >>>', sessionIds[thisSessionID]);
       assistant.ask(`Sorry, you have to ask for a company first.`);
     } else {
       const lastRequest = sessionIds[thisSessionID][ sessionIds[thisSessionID].length - 1 ];
+      console.log('3 >>>',lastRequest);
+      console.log('3a >>>', lastRequest.contexts[0].metadata);
+      console.log('4 >>>', lastRequest.contexts[0].metadata.intentName);
+
       if (lastRequest.contexts[0].metadata.intentName === "getCompany"){
         assistant.ask(`Sorry, I can't tell you anymore about ${lastRequest.result.parameters.company}`);
       } else {
