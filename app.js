@@ -39,6 +39,7 @@ function getCompany (assistant) {
 }
 
 function moreInfo(assistant){
+    console.log('<<< MORE INFO >>>');
     const thisSessionID = assistant['request_'].body.sessionId;
     console.log('1 >>>',thisSessionID);
     if (sessionIds[thisSessionID] === undefined ){
