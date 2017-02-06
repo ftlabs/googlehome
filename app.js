@@ -22,7 +22,7 @@ app.post('/', function (req, res) {
   } else {
     sessionIds[thisSessionID].push(thisSessionID);
   }
-  console.log (sessionIds[thisSessionID].length);
+  console.log (sessionIds[thisSessionID], 'Number of calls:', sessionIds[thisSessionID].length);
 
   console.log('>>>> BODY >>>> \n\n', JSON.stringify(req.body), '\n\n');
   console.log ('req.body=', JSON.stringify(req.body));
