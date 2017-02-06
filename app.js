@@ -14,7 +14,7 @@ app.use(bodyParser.json({type: 'application/json'}));
 const companyArgument = 'company';
 const marketsDataKey = process.env.markets;
 function getCompany (assistant) {
-
+  console.log(assistant.getUser());
   let company = assistant.getArgument(companyArgument);
 
   fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
