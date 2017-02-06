@@ -15,6 +15,8 @@ const companyArgument = 'company';
 const marketsDataKey = process.env.markets;
 function getCompany (assistant) {
   console.log(Object.keys(assistant));
+  console.log(assistant.data);
+  console.log(assistant['request_']);
   let company = assistant.getArgument(companyArgument);
 
   fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
