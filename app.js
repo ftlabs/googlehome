@@ -14,8 +14,7 @@ app.use(bodyParser.json({type: 'application/json'}));
 const companyArgument = 'company';
 const marketsDataKey = process.env.markets;
 function getCompany (assistant) {
-  console.log(Object.keys(assistant));
-  console.log(assistant['request_'].body.sessionId);
+
   let company = assistant.getArgument(companyArgument);
 
   fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
@@ -40,7 +39,20 @@ function getCompany (assistant) {
 }
 
 function moreInfo(assistant){
-    assistant.ask(`Sorry I can't do this for you.`);
+    const sessionId = assistant['request_'].body.sessionId);
+    if (sessionIds[thisSessionID] === undefined ){
+      assistant.ask(`Sorry, you have to ask for a company first.`);
+    } else {
+      const lastRequest = sessionIds[thisSessionID][ sessionIds[thisSessionID].length - 1 ];
+      if (lastRequest.contexts[0].metadata.intentName === "getCompany"){
+        assistant.ask(`Sorry, I can't tell you anymore about ${lastRequest.result.parameters.company}`);
+      } else {
+        assistant.ask ("Sorry, I don't know what to do with that.");
+      }
+
+
+    }
+
 }
 
 let actionMap = new Map();
