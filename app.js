@@ -39,8 +39,8 @@ function getCompany (assistant) {
 }
 
 function moreInfo(assistant){
-    const thisSessionId = assistant['request_'].body.sessionId;
-    console.log('1 >>>',thisSessionId);
+    const thisSessionID = assistant['request_'].body.sessionId;
+    console.log('1 >>>',thisSessionID);
     if (sessionIds[thisSessionID] === undefined ){
       console.log('2 >>>', sessionIds[thisSessionID]);
       assistant.ask(`Sorry, you have to ask for a company first.`);
