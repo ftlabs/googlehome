@@ -37,9 +37,14 @@ function getCompany (assistant) {
   ;
 
 }
+
+function moreInfo(assistant){
+    assistant.ask(`Sorry I can't do this for you.`);
+}
+
 let actionMap = new Map();
 actionMap.set('getCompany', getCompany);
-//actionMap.set('more', moreInfo);
+actionMap.set('more', moreInfo);
 
 const sessionIds = {};
 
