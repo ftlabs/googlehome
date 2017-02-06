@@ -39,7 +39,7 @@ function getCompany (assistant) {
 }
 
 function moreInfo(assistant){
-    const sessionId = assistant['request_'].body.sessionId);
+    const sessionId = assistant['request_'].body.sessionId;
     if (sessionIds[thisSessionID] === undefined ){
       assistant.ask(`Sorry, you have to ask for a company first.`);
     } else {
