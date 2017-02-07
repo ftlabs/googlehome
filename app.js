@@ -53,7 +53,7 @@ function moreInfo(assistant){
       } else {
         assistant.ask ("Sorry, I don't know what to do with that.");
       }*/
-
+      assistant.ask(`Ah, so you want me to tell you more?`);
 
     }
 
@@ -75,7 +75,6 @@ app.post('/', function (req, res) {
   console.log (sessionIds[thisSessionID], 'Number of calls:', sessionIds[thisSessionID].length);
 
   console.log('>>>> BODY >>>> \n\n', JSON.stringify(req.body), '\n\n');
-  console.log ('req.body=', JSON.stringify(req.body));
   console.log ('EXTRACTED_SessionId=' , req.body.sessionId);
   console.log ('EXTRACTED_conversation_id=' , req.body.originalRequest.data.conversation.conversation_id);
 	const assistant = new Assistant({request: req, response: res});
