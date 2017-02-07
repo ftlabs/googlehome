@@ -42,7 +42,7 @@ function moreInfo(assistant){
     console.log('<<< MORE INFO >>>');
     const thisSessionID = assistant['request_'].body.sessionId;
     console.log('1 >>>',thisSessionID);
-    if (sessionIds[thisSessionID] === undefined ){
+    if (sessionIds[thisSessionID].length === 1 ){
       console.log('2 >>>', sessionIds[thisSessionID]);
       assistant.ask(`Sorry, you have to ask for a company first.`);
     } else {
@@ -53,7 +53,8 @@ function moreInfo(assistant){
       } else {
         assistant.ask ("Sorry, I don't know what to do with that.");
       }*/
-      assistant.ask(`Ah, so you want me to tell you more?`);
+      console.log('3 >>>', sessionIds[thisSessionID]);
+      assistant.ask('Ah, so you want me to tell you more?');
 
     }
 
@@ -78,8 +79,6 @@ app.post('/', function (req, res) {
   console.log ('EXTRACTED_SessionId=' , req.body.sessionId);
   console.log ('EXTRACTED_conversation_id=' , req.body.originalRequest.data.conversation.conversation_id);
 	const assistant = new Assistant({request: req, response: res});
-
-
 
   // actionMap.set(getCompanyIntent, getCompany);
 
