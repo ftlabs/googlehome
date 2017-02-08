@@ -17,25 +17,35 @@ function getCompany (assistant) {
 
   let company = assistant.getArgument(companyArgument);
 
-  fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
-    .then((data) => {
-      if (data.ok) {
-        return data.json();
-      }
-    })
-    .then((json) => {
-      fetch(`http://markets.ft.com/research/webservices/companies/v1/profile?symbols=${json.data.searchResults[0].symbol}&source=${marketsDataKey}`).then((data) => {
+  let promise = new Promise (resolve => {
+    if (marketsSecuritiesCache[company] !== undefined){
+      console.log('Debug: marketsSecuritiesCache hit, company=', company);
+      resolve(marketsSecuritiesCache[company]);
+    } else {
+      console.log('Debug: marketsSecuritiesCache miss, company=', company);
+      fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
+      .then((data) => {
         if (data.ok) {
-            return data.json();
-          }
-        }).then((json) => {
-        assistant.ask(json.data.items[0].profile.description);
-      });
-    }).catch((error) => {
-      console.log(error)
-    })
+          console.log('Debug: data.ok');
+          let json = data.json();
+          marketsSecuritiesCache[company] = json;
+          resolve(json);
+        }
+      })
+    }
+  })
+  .then(json => {
+    fetch(`http://markets.ft.com/research/webservices/companies/v1/profile?symbols=${json.data.searchResults[0].symbol}&source=${marketsDataKey}`).then((data) => {
+      if (data.ok) {
+          return data.json();
+        }
+      }).then((json) => {
+      assistant.ask(json.data.items[0].profile.description);
+    });
+  }).catch((error) => {
+    console.log(error)
+  })
   ;
-
 }
 
 function moreInfo(assistant){
@@ -65,6 +75,8 @@ actionMap.set('getCompany', getCompany);
 actionMap.set('more', moreInfo);
 
 const sessionIds = {};
+const marketsSecuritiesCache = {};
+const marketsProfileCache = {};
 
 app.post('/', function (req, res) {
   const thisSessionID = req.body.sessionId;
