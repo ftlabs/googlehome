@@ -17,7 +17,7 @@ function getCompany (assistant) {
 
   let company = assistant.getArgument(companyArgument);
 
-  let promise = new Promise (resolve => {
+  new Promise (resolve => {
     if (marketsSecuritiesCache[company] !== undefined){
       console.log('Debug: marketsSecuritiesCache hit, company=', company);
       resolve(marketsSecuritiesCache[company]);
@@ -26,7 +26,7 @@ function getCompany (assistant) {
       fetch(`http://markets.ft.com/research/webservices/securities/v1/search?query=${company}&source=${marketsDataKey}`)
       .then((data) => {
         if (data.ok) {
-          console.log('Debug: data.ok');
+          console.log('Debug: securities data.ok');
           let json = data.json();
           marketsSecuritiesCache[company] = json;
           resolve(json);
@@ -35,12 +35,28 @@ function getCompany (assistant) {
     }
   })
   .then(json => {
-    fetch(`http://markets.ft.com/research/webservices/companies/v1/profile?symbols=${json.data.searchResults[0].symbol}&source=${marketsDataKey}`).then((data) => {
-      if (data.ok) {
-          return data.json();
-        }
-      }).then((json) => {
-      assistant.ask(json.data.items[0].profile.description);
+    let symbol = json.data.searchResults[0].symbol;
+    new Promise (resolve =>{
+      if (marketsProfileCache[symbol] !== undefined){
+        console.log('Debug: marketsProfileCache hit, symbol=', symbol);
+        resolve(marketsProfileCache[symbol]);
+      } else {
+        console.log('Debug: marketsProfileCache miss, symbol=', symbol);
+        fetch(`http://markets.ft.com/research/webservices/companies/v1/profile?symbols=${symbol}&source=${marketsDataKey}`)
+        .then((data) => {
+          if (data.ok) {
+            console.log('Debug: profile data.ok');
+            let json = data.json();
+            marketsProfileCache[symbol] = json;
+            resolve(json);
+          }
+        })
+      }
+    })
+    .then((json) => {
+      let description = json.data.items[0].profile.description;
+      console.log('Debug: responding to assistant with description = ', description);
+      assistant.ask(description);
     });
   }).catch((error) => {
     console.log(error)
